@@ -87,7 +87,7 @@ export default function LeftSection() {
       setDate(value);
     } else if (identifier === 'skillsDetails') {
       setSkillsDetails(value);
-    }else if (identifier === 'hobby') {
+    } else if (identifier === 'hobby') {
       setHobbyDetails(value);
     }
   }
@@ -211,7 +211,7 @@ export default function LeftSection() {
               />
             </div>
           </div>
-          <div className='p-5 flex-col items-baseline sm:flex sm:flex-row gap-5'>
+          <div className='p-5 flex-col sm:flex sm:flex-row gap-5'>
             <div className='mt-2'>
               <p>Project Details</p>
               <Input
@@ -224,7 +224,7 @@ export default function LeftSection() {
                 value={projectDetails}
               />
             </div>
-            <div>
+            <div className='mt-2'>
               <p>Date</p>
               <Input
                 type='text'
@@ -236,6 +236,12 @@ export default function LeftSection() {
                 value={date}
               />
             </div>
+            <Button
+              type='button'
+              text='Add Experience'
+              onClick={handleAddData}
+              className=' bg-black  rounded-md h-12 mt-10'
+            />
           </div>
           <div className='p-5 flex-col  sm:flex sm:flex-row gap-5'>
             <div>
@@ -295,18 +301,33 @@ export default function LeftSection() {
           <div className='mt-12 bg-amber-100 text-left p-2'>
             <p className=' overflow-hidden ml-40'>{about}</p>
           </div>
-          <div className=''>
-            <div className='bg-[grey] p-6'>
+          <div className='flex'>
+            <div className='bg-[#d8d8d8] p-6'>
               <h1 className='font-extrabold text-sky-950'>MY SKILLS</h1>
-              {skills.map((skill, index) => (
+              {skills?.map((skill, index) => (
                 <p className='p-1'>{skill.skills}</p>
               ))}
               <p className='mt-4 text-sky-950 font-bold'>HOBBIES</p>
               <div className='flex gap-4'>
-              {hobby.map((hobbies, index) => (
-                <p className='p-1'>{hobbies.hobby}</p>
-              ))}
+                {hobby?.map((hobbies, index) => (
+                  <p className='p-1'>{hobbies.hobby}</p>
+                ))}
               </div>
+            </div>
+            <div>
+              <div>{data?.map((val, ind) => (
+                <>
+                  <h1>{val?.heading}</h1>
+                  <div>
+                   <p>{val?.designation}</p> 
+                    <p>{val?.project}</p> 
+                    <p>{val?.projectDetails}</p>
+                  </div>
+                  <div>
+                    {val?.date}
+                  </div>
+                  </>
+              ))}</div>
             </div>
           </div>
         </div>
