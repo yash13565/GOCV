@@ -40,6 +40,10 @@ export default function LeftSection() {
   const [grade, setGrade] = useState('');
   const [graduationDate, setGraduationDate] = useState('');
   const [educationData, setEducationData] = useState<educationData>([]);
+  const [show, setShow] = useState(true);
+  function toggleColors() {
+    setShow((prev) => !prev);
+  }
   function handleAddData() {
     setData([
       ...data,
@@ -131,7 +135,7 @@ export default function LeftSection() {
     <div className='flex-col md:flex-row md:flex'>
       <div>
         <h1 className='m-10 sm:m-20 font-bold text-2xl'>Add Given Fields</h1>
-        <div className='bg-[#022b3a] ml-10 sm:ml-20 w-[54%] md:w-[80%] p-3 rounded-md text-white font-semibold'>
+        <div className='bg-[#022b3a] ml-10 sm:ml-20 w-fit md:w-[80%] p-3 rounded-md text-white font-semibold max-h-[78vh] overflow-y-scroll scrollbar-hide'>
           <div className='p-5 flex-col items-baseline sm:flex sm:flex-row gap-5'>
             <div>
               <p>Phone No</p>
@@ -263,7 +267,7 @@ export default function LeftSection() {
               type='button'
               text='Add Experience'
               onClick={handleAddData}
-              className=' bg-black  rounded-md h-12 mt-10'
+              className=' bg-black  rounded-md  mt-10 '
             />
           </div>
           <div className='p-5 flex-col items-baseline sm:flex sm:flex-row gap-5'>
@@ -309,7 +313,7 @@ export default function LeftSection() {
               type='button'
               text='Add Education'
               onClick={addEducationData}
-              className=' bg-black  rounded-md h-12 mt-10 p-2'
+              className=' bg-black  rounded-md mt-10 p-2'
             />
           </div>
           <div className='p-5 flex-col  sm:flex sm:flex-row gap-5'>
@@ -349,7 +353,7 @@ export default function LeftSection() {
               type='button'
               text='Add Hobby'
               onClick={addHobby}
-              className=' bg-black p-3 rounded-md h-10 mt-9'
+              className=' bg-black p-3 rounded-md mt-8'
             />
           </div>
         </div>
@@ -357,9 +361,9 @@ export default function LeftSection() {
       {/* Resume Template goes here */}
       <div
         id='resume-container'
-        className='shadow-md bg-[#ffffff] w-[700px] mt-20 rounded-md max-h-[91vh]'
+        className='shadow-md w-[700px] mt-20 rounded-md h-fit pb-4'
       >
-        <div className='flex justify-between ml-[1rem] font-semibold text-sm'>
+        <div className='flex justify-between ml-[1rem] font-semibold text-sm mt-2'>
           <h1>Phone: {phone.length === 0 ? '0000000000' : phone}</h1>
           <h1>Email: {email.length === 0 ? 'dummy@gmail.com' : email}</h1>
           <h1 className='w-[40%]'>
@@ -369,79 +373,185 @@ export default function LeftSection() {
               : address}
           </h1>
         </div>
-        <div className='bg-[#ffffff] shadow-md mt-2 rounded-xl'>
-          <div className='flex flex-col items-center mt-8 text-left'>
-            <p className='font-extrabold text-[#c0d6df] text-[1.5rem]'>
+        <div className='mt-2 ml-8'>
+          <div
+            className={`flex flex-col items-center mt-8 text-left ${
+              show ? 'bg-[#022b3a]' : 'bg-cyan-400'
+            } rounded-tl-lg pb-4`}
+          >
+            <p
+              className={`font-extrabold ${
+                show ? 'text-[#c0d6df]' : 'text-[#246a73]'
+              } text-[1.5rem]`}
+            >
               {name.length === 0 ? 'Luke Ronchi' : name}
             </p>
-            <p className='font-bold text-[#c0d6df] text-[1rem]'>
+            <p
+              className={`font-bold ${
+                show ? 'text-[#c0d6df]' : 'text-[#246a73]'
+              } text-[1rem]`}
+            >
               {title.length === 0 ? 'UI/UX DESIGNER' : title}
             </p>
           </div>
-          <div className='mt-12 bg-amber-100 text-left p-2 min-h-[75px]'>
-            <p className=' ml-40 text-sm'>
+          <div
+            className={`${
+              show ? 'bg-amber-100' : 'bg-amber-600'
+            } text-left p-2 h-fit`}
+          >
+            <p
+              className={`ml-40 text-sm ${
+                show ? 'text-[black]' : 'text-[#fff]'
+              }`}
+            >
               {about.length === 0
                 ? 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident officia in, voluptatem, commodi velit eius aperiam fugiat, magni earum tenetur optio labore ad explicabo deleniti perspiciatis ut eaque nam veritatis'
                 : about}
             </p>
           </div>
-          <div className='flex gap-8'>
-            <div className='bg-[#d8d8d8] p-6 w-[40%]'>
-              <h1 className='font-extrabold text-sky-950'>MY SKILLS</h1>
-              {skills?.map((skill, index) => (
-                <p className='p-1'>{skill.skills}</p>
-              ))}
+          <div className='flex gap-8 h-fit'>
+            <div
+              className={`${
+                show ? 'bg-[#d8d8d8]' : 'bg-[#eff6e0]'
+              } p-6 w-[40%] rounded-b-lg`}
+            >
+              <h1 className='font-extrabold text-sky-950 mt-8'>MY SKILLS</h1>
+              {skills.length === 0 ? (
+                <>
+                  <p className='p-1'>Html</p>
+                  <p className='p-1'>Html</p>
+                  <p className='p-1'>Html</p>
+                </>
+              ) : (
+                skills?.map((skill) => <p className='p-1'>{skill.skills}</p>)
+              )}
               <p className='mt-10 text-sky-950 font-bold'>HOBBIES</p>
               <div className='flex gap-4  flex-wrap '>
-                {hobby?.map((hobbies, index) => (
-                  <p key={index} className='p-1'>
-                    {hobbies.hobby}
-                  </p>
-                ))}
+                {hobby.length === 0 ? (
+                  <>
+                    <p className='p-1'>Html</p>
+                    <p className='p-1'>Html</p>
+                    <p className='p-1'>Html</p>
+                  </>
+                ) : (
+                  hobby?.map((hobbies, index) => (
+                    <p key={index} className='p-1'>
+                      {hobbies.hobby}
+                    </p>
+                  ))
+                )}
               </div>
             </div>
-            <div>
-              <h1 className='font-bold text-yellow-300 text-2xl'>Experience</h1>
-              {data?.map((val, ind) => (
-                <div key={ind} className='flex justify-between pb-5'>
+            <div className='mt-2'>
+              <h1
+                className={`font-bold ${
+                  show ? 'text-yellow-300' : 'text-cyan-400'
+                } text-2xl`}
+              >
+                Experience
+              </h1>
+              {data.length === 0 ? (
+                <div className='flex justify-between'>
                   <div>
-                    <p className='font-bold text-xl'>{val?.designation}</p>
-                    <p className='font-bold text-sm'>{val?.project}</p>
+                    <p className='font-bold text-xl'>Frontend</p>
+                    <p className='font-bold text-sm'>Sales</p>
                     <p className='w-60 text-gray-500 text-xs'>
-                      {val?.projectDetails}
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Officiis beatae
                     </p>
                   </div>
-                  <div className='max-h-[35px] p-[10px] bg-amber-400 rounded-tl-[290px]'>
-                    <p className='text-sm'>{val?.date}</p>
+                  <div
+                    className={`max-h-[35px] p-[10px] ${
+                      show ? 'bg-amber-400' : 'bg-cyan-700'
+                    } rounded-tl-[290px] mr-4`}
+                  >
+                    <p className='text-sm'>2013 to 2015</p>
                   </div>
                 </div>
-              ))}
-              <div className='border-t border-dotted border-gray-500 my-20 w-[27rem]'></div>
-              <h1 className='font-bold text-yellow-300 text-2xl mt-[5rem]'>
+              ) : (
+                data?.map((val, ind) => (
+                  <div key={ind} className='flex justify-between'>
+                    <div>
+                      <p className='font-bold text-xl'>{val?.designation}</p>
+                      <p className='font-bold text-sm'>{val?.project}</p>
+                      <p className='w-60 text-gray-500 text-xs'>
+                        {val?.projectDetails}
+                      </p>
+                    </div>
+                    <div
+                      className={`max-h-[35px] p-[10px] ${
+                        show ? 'bg-amber-400' : 'bg-cyan-700'
+                      } rounded-tl-[290px] mr-4`}
+                    >
+                      <p className='text-sm'>{val?.date}</p>
+                    </div>
+                  </div>
+                ))
+              )}
+              <div className='border-t border-dotted border-gray-500 my-10 w-[25rem] mr-2'></div>
+              <h1
+                className={`font-bold ${
+                  show ? 'text-yellow-300' : 'text-cyan-400'
+                } text-2xl`}
+              >
                 Education
               </h1>
-              {educationData?.map((val, ind) => (
-                <div key={ind} className='flex justify-between pb-5'>
+              {educationData.length === 0 ? (
+                <div className='flex justify-between pb-4'>
                   <div>
-                    <p className='font-bold text-xl'>{val?.university}</p>
-                    <p className='font-bold text-sm'>{val?.grade}</p>
+                    <p className='font-bold text-xl'>Frontend</p>
+                    <p className='font-bold text-sm'>Sales</p>
+                    <p className='w-60 text-gray-500 text-xs'>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Officiis beatae
+                    </p>
                   </div>
-                  <div className='max-h-[35px] p-[10px] bg-amber-400 rounded-tl-[290px]'>
-                    <p className='text-sm'>{val?.graduationDate}</p>
+                  <div
+                    className={`h-fit p-[10px] ${
+                      show ? 'bg-amber-400' : 'bg-cyan-700'
+                    } rounded-tl-[290px] mr-4`}
+                  >
+                    <p className='text-sm'>2013 to 2015</p>
                   </div>
                 </div>
-              ))}
+              ) : (
+                educationData?.map((val, ind) => (
+                  <div key={ind} className='flex justify-between pb-4'>
+                    <div>
+                      <p className='font-bold text-xl'>{val?.university}</p>
+                      <p className='font-bold text-sm'>{val?.grade}</p>
+                    </div>
+                    <div
+                      className={`h-fit p-[10px] ${
+                        show ? 'bg-amber-400' : 'bg-cyan-700'
+                      } rounded-tl-[290px] mr-4`}
+                    >
+                      <p className='text-sm'>{val?.graduationDate}</p>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
       </div>
-      <div>
-        <Button
-          type='button'
-          text='Download Resume'
-          onClick={downloadResume}
-          className='bg-blue-500 text-white px-4 py-2 rounded-md mt-4'
-        />
+      <div className='flex gap-2'>
+        <div>
+          <Button
+            type='button'
+            text='Download Resume'
+            onClick={downloadResume}
+            className='bg-blue-500 text-white px-4 py-2 rounded-md mt-4'
+          />
+        </div>
+        <div>
+          <Button
+            type='button'
+            text='Change Colors'
+            onClick={toggleColors}
+            className={`bg-orange-500 px-4 py-2 rounded-md mt-4`}
+          />
+        </div>
       </div>
     </div>
   );

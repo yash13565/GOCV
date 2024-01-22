@@ -6,3 +6,7 @@
 body {
   background-color: rgb(255, 252, 252);
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
