@@ -8,6 +8,7 @@ type myData = {
   project: string;
   projectDetails: string;
   date: string;
+  responsibility: string;
 }[];
 type skillData = {
   skills: string;
@@ -29,6 +30,7 @@ export default function LeftSection() {
   const [about, setAbout] = useState('');
   const [designation, setDesignation] = useState('');
   const [project, setProject] = useState('');
+  const [responsibility, setResponsibility] = useState('');
   const [projectDetails, setProjectDetails] = useState('');
   const [date, setDate] = useState('');
   const [data, setData] = useState<myData>([]);
@@ -40,10 +42,7 @@ export default function LeftSection() {
   const [grade, setGrade] = useState('');
   const [graduationDate, setGraduationDate] = useState('');
   const [educationData, setEducationData] = useState<educationData>([]);
-  const [show, setShow] = useState(true);
-  function toggleColors() {
-    setShow((prev) => !prev);
-  }
+  const [show, _setShow] = useState(true);
   function handleAddData() {
     setData([
       ...data,
@@ -51,7 +50,8 @@ export default function LeftSection() {
         designation: designation,
         project: project,
         projectDetails: projectDetails,
-        date,
+        date: date,
+        responsibility: responsibility,
       },
     ]);
   }
@@ -100,6 +100,8 @@ export default function LeftSection() {
       setDesignation(value);
     } else if (identifier === 'project') {
       setProject(value);
+    } else if (identifier === 'responsibility') {
+      setResponsibility(value);
     } else if (identifier === 'projectDetails') {
       setProjectDetails(value);
     } else if (identifier === 'date') {
@@ -121,7 +123,6 @@ export default function LeftSection() {
 
     if (resumeContainer) {
       const pdfOptions = {
-        margin: 4,
         filename: 'resume.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
@@ -237,6 +238,18 @@ export default function LeftSection() {
                 value={project}
               />
             </div>
+            <div>
+              <p>Responsibility</p>
+              <Input
+                type='text'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleChange('responsibility', e.target.value)
+                }
+                placeholder='responsibility'
+                className='p-2 rounded-sm outline-none mt-3 text-black w-[100%]'
+                value={responsibility}
+              />
+            </div>
           </div>
           <div className='p-5 flex-col sm:flex sm:flex-row gap-5'>
             <div className='mt-2'>
@@ -267,7 +280,8 @@ export default function LeftSection() {
               type='button'
               text='Add Experience'
               onClick={handleAddData}
-              className=' bg-black  rounded-md  mt-10 '
+              className=' bg-black  rounded-md  mt-10 p-2'
+              disabled={false}
             />
           </div>
           <div className='p-5 flex-col items-baseline sm:flex sm:flex-row gap-5'>
@@ -314,6 +328,7 @@ export default function LeftSection() {
               text='Add Education'
               onClick={addEducationData}
               className=' bg-black  rounded-md mt-10 p-2'
+              disabled={false}
             />
           </div>
           <div className='p-5 flex-col  sm:flex sm:flex-row gap-5'>
@@ -334,6 +349,7 @@ export default function LeftSection() {
               text='AddSkills'
               onClick={addSkills}
               className=' bg-black p-3 rounded-md h-10 mt-9'
+              disabled={false}
             />
           </div>
           <div className='p-5 flex-col  sm:flex sm:flex-row gap-5'>
@@ -354,6 +370,7 @@ export default function LeftSection() {
               text='Add Hobby'
               onClick={addHobby}
               className=' bg-black p-3 rounded-md mt-8'
+              disabled={false}
             />
           </div>
         </div>
@@ -361,23 +378,20 @@ export default function LeftSection() {
       {/* Resume Template goes here */}
       <div
         id='resume-container'
-        className='shadow-md w-[700px] mt-20 rounded-md h-fit pb-4'
+        className='shadow-md w-fit mt-20 rounded-md h-fit'
       >
-        <div className='flex justify-between ml-[1rem] font-semibold text-sm mt-2'>
+        <div className='flex justify-evenly gap-3  font-semibold text-xs mt-4 ml-[59px]'>
           <h1>Phone: {phone.length === 0 ? '0000000000' : phone}</h1>
           <h1>Email: {email.length === 0 ? 'dummy@gmail.com' : email}</h1>
           <h1 className='w-[40%]'>
-            Address:{' '}
-            {address.length === 0
-              ? 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa cupiditate possimus'
-              : address}
+            Address: {address.length === 0 ? 'Bilaspur,Chhattisgarh' : address}
           </h1>
         </div>
-        <div className='mt-2 ml-8'>
+        <div className='mt-2'>
           <div
-            className={`flex flex-col items-center mt-8 text-left ${
-              show ? 'bg-[#022b3a]' : 'bg-cyan-400'
-            } rounded-tl-lg pb-4`}
+            className={`flex flex-col pl-[9.7%] mt-8 text-left ${
+              show ? 'bg-sky-500' : 'bg-cyan-400'
+            } pb-4`}
           >
             <p
               className={`font-extrabold ${
@@ -396,11 +410,11 @@ export default function LeftSection() {
           </div>
           <div
             className={`${
-              show ? 'bg-amber-100' : 'bg-amber-600'
-            } text-left p-2 h-fit`}
+              show ? 'bg-indigo-300' : 'bg-amber-600'
+            } text-left p-2  h-fit`}
           >
             <p
-              className={`ml-40 text-sm ${
+              className={`ml-[9.1%] text-sm ${
                 show ? 'text-[black]' : 'text-[#fff]'
               }`}
             >
@@ -411,28 +425,26 @@ export default function LeftSection() {
           </div>
           <div className='flex gap-8 h-fit'>
             <div
-              className={`${
-                show ? 'bg-[#d8d8d8]' : 'bg-[#eff6e0]'
-              } p-6 w-[40%] rounded-b-lg`}
+              className={`${show ? 'bg-sky-500' : 'bg-[#eff6e0]'} p-6 pl-[9.7%] w-[40%]`}
             >
-              <h1 className='font-extrabold text-sky-950 mt-8'>MY SKILLS</h1>
+              <h1 className='font-extrabold text-[#c0d6df] mt-8'>MY SKILLS</h1>
               {skills.length === 0 ? (
-                <>
-                  <p className='p-1'>Html</p>
-                  <p className='p-1'>Html</p>
-                  <p className='p-1'>Html</p>
-                </>
+                <div className='font-semibold'>
+                  <p className='p-1'>
+                    {skillsDetails.length === 0 ? 'Html' : skillsDetails}
+                  </p>
+                </div>
               ) : (
                 skills?.map((skill) => <p className='p-1'>{skill.skills}</p>)
               )}
-              <p className='mt-10 text-sky-950 font-bold'>HOBBIES</p>
+              <p className='mt-10 text-[#c0d6df] font-bold'>HOBBIES</p>
               <div className='flex gap-4  flex-wrap '>
                 {hobby.length === 0 ? (
-                  <>
-                    <p className='p-1'>Html</p>
-                    <p className='p-1'>Html</p>
-                    <p className='p-1'>Html</p>
-                  </>
+                  <div className='font-semibold'>
+                    <p className='p-1'>
+                      {hobbyDetails.length === 0 ? 'Html' : hobbyDetails}
+                    </p>
+                  </div>
                 ) : (
                   hobby?.map((hobbies, index) => (
                     <p key={index} className='p-1'>
@@ -445,7 +457,7 @@ export default function LeftSection() {
             <div className='mt-2'>
               <h1
                 className={`font-bold ${
-                  show ? 'text-yellow-300' : 'text-cyan-400'
+                  show ? 'text-sky-500' : 'text-cyan-400'
                 } text-2xl`}
               >
                 Experience
@@ -453,19 +465,31 @@ export default function LeftSection() {
               {data.length === 0 ? (
                 <div className='flex justify-between'>
                   <div>
-                    <p className='font-bold text-xl'>Frontend</p>
-                    <p className='font-bold text-sm'>Sales</p>
+                    <p className='font-bold text-xl'>
+                      {designation.length === 0 ? 'Frontend' : designation}
+                    </p>
+                    <p className='font-bold text-md'>
+                      {project.length === 0 ? 'Sales' : project}
+                    </p>
+                    <p className='font-bold text-sm w-60'>
+                      {responsibility.length === 0
+                        ? 'Responsibility'
+                        : responsibility}
+                    </p>
                     <p className='w-60 text-gray-500 text-xs'>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Officiis beatae
+                      {projectDetails.length === 0
+                        ? 'Lorem ipsum dolor sit amet consectetur adipisicing elit Officiis beatae'
+                        : projectDetails}
                     </p>
                   </div>
                   <div
-                    className={`max-h-[35px] p-[10px] ${
-                      show ? 'bg-amber-400' : 'bg-cyan-700'
-                    } rounded-tl-[290px] mr-4`}
+                    className={`h-fit p-2 ${
+                      show ? 'bg-sky-500' : 'bg-cyan-700'
+                    }  mr-4`}
                   >
-                    <p className='text-sm'>2013 to 2015</p>
+                    <p className='text-sm'>
+                      {date.length === 0 ? '2013 to 2015' : date}
+                    </p>
                   </div>
                 </div>
               ) : (
@@ -479,9 +503,9 @@ export default function LeftSection() {
                       </p>
                     </div>
                     <div
-                      className={`max-h-[35px] p-[10px] ${
-                        show ? 'bg-amber-400' : 'bg-cyan-700'
-                      } rounded-tl-[290px] mr-4`}
+                      className={`h-fit p-2 ${
+                        show ? 'bg-sky-500' : 'bg-cyan-700'
+                      }  mr-4`}
                     >
                       <p className='text-sm'>{val?.date}</p>
                     </div>
@@ -491,7 +515,7 @@ export default function LeftSection() {
               <div className='border-t border-dotted border-gray-500 my-10 w-[25rem] mr-2'></div>
               <h1
                 className={`font-bold ${
-                  show ? 'text-yellow-300' : 'text-cyan-400'
+                  show ? 'text-sky-500' : 'text-cyan-400'
                 } text-2xl`}
               >
                 Education
@@ -499,19 +523,23 @@ export default function LeftSection() {
               {educationData.length === 0 ? (
                 <div className='flex justify-between pb-4'>
                   <div>
-                    <p className='font-bold text-xl'>Frontend</p>
-                    <p className='font-bold text-sm'>Sales</p>
-                    <p className='w-60 text-gray-500 text-xs'>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Officiis beatae
+                    <p className='font-bold text-xl'>
+                      {university.length === 0 ? 'University' : university}
+                    </p>
+                    <p className='font-bold text-sm'>
+                      {grade.length === 0 ? '60%' : grade}
                     </p>
                   </div>
                   <div
-                    className={`h-fit p-[10px] ${
-                      show ? 'bg-amber-400' : 'bg-cyan-700'
-                    } rounded-tl-[290px] mr-4`}
+                    className={`h-fit p-2 ${
+                      show ? 'bg-sky-500' : 'bg-cyan-700'
+                    }  mr-4`}
                   >
-                    <p className='text-sm'>2013 to 2015</p>
+                    <p className='text-sm'>
+                      {graduationDate.length === 0
+                        ? '2013 to 2015'
+                        : graduationDate}
+                    </p>
                   </div>
                 </div>
               ) : (
@@ -522,9 +550,9 @@ export default function LeftSection() {
                       <p className='font-bold text-sm'>{val?.grade}</p>
                     </div>
                     <div
-                      className={`h-fit p-[10px] ${
-                        show ? 'bg-amber-400' : 'bg-cyan-700'
-                      } rounded-tl-[290px] mr-4`}
+                      className={`h-fit p-2 ${
+                        show ? 'bg-sky-500' : 'bg-cyan-700'
+                      } mr-4`}
                     >
                       <p className='text-sm'>{val?.graduationDate}</p>
                     </div>
@@ -542,14 +570,7 @@ export default function LeftSection() {
             text='Download Resume'
             onClick={downloadResume}
             className='bg-blue-500 text-white px-4 py-2 rounded-md mt-4'
-          />
-        </div>
-        <div>
-          <Button
-            type='button'
-            text='Change Colors'
-            onClick={toggleColors}
-            className={`bg-orange-500 px-4 py-2 rounded-md mt-4`}
+            disabled={false}
           />
         </div>
       </div>
